@@ -194,46 +194,42 @@ class PasswordResetAPIView(APIView):
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import ExpertSignUpSerializer, NotificationSerializer
-from .models import Owner, Notification
+from .serializers import ExpertSignUpSerializer
+from .models import Expert, Notification
 from .notifications import send_notification_to_owner
-import logging
-from django.contrib.auth.models import User
+from .models import Owner
 
 class ExpertSignUpAPIView(APIView):
     def post(self, request):
         serializer = ExpertSignUpSerializer(data=request.data)
         if serializer.is_valid():
             expert = serializer.save()
-            language = expert.languages_spoken
-            category = expert.get_expert_category_display()
-            subcategory = expert.get_subcategory_display()
-            response_data = {
-                "message": "Expert signed up successfully.",
-                "language": language,
-                "category": category,
-                "subcategory": subcategory
-            }
 
-            # Send notification to owner
-            owner = expert.owner  # Fetching the owner associated with the expert
-            if owner:
-                message = f"New expert profile created: {expert.first_name} {expert.last_name}"
-                owner_user = owner.user  # Assuming 'user' is the attribute representing the User instance of the owner
-                send_notification_to_owner(owner_user, message)  # Pass both owner_user and message to the function
-                
-                # Create and serialize the notification
-                notification = Notification.objects.create(owner=owner_user, message=message)
-                notification_serializer = NotificationSerializer(notification)
-                
-                response_data["notification"] = notification_serializer.data
-                return Response(response_data, status=status.HTTP_201_CREATED)
-            else:
-                error_message = "Owner not found."
-                logging.error(error_message)
-                return Response({"error": error_message}, status=status.HTTP_404_NOT_FOUND)
-            
+            # Retrieve the owner with the primary key of 1
+            try:
+                owner = Owner.objects.get(pk=1)
+            except Owner.DoesNotExist:
+                return Response({"error": "Owner with the specified ID does not exist."}, status=status.HTTP_404_NOT_FOUND)
+
+            # Create the notification message
+            message = f"New expert profile created: {expert.first_name} {expert.last_name}"
+
+            # Create a notification object
+            notification = Notification.objects.create(owner=owner, message=message)
+
+            # Send the notification to the owner
+            send_notification_to_owner(owner.user, message)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+
+
 
 
 

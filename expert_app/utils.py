@@ -34,5 +34,19 @@ def send_notification_to_owner(owner_user, message):
         logging.warning("Owner's FCM device not found. Notification not sent.")
 
  
+# expert_app/utils.py
+
+from django.contrib.auth.models import User
+from .models import Owner
+
+def find_owner(email):
+    try:
+        user = User.objects.get(email=email)
+        owner = Owner.objects.get(user=user)
+        return owner
+    except User.DoesNotExist:
+        return None
+    except Owner.DoesNotExist:
+        return None
 
  

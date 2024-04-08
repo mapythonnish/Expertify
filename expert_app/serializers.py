@@ -81,9 +81,6 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Expert, Certification, Owner
 from .notifications import send_notification_to_owner
-from rest_framework import serializers
-from django.contrib.auth.models import User
-from .models import Expert, Certification, Owner
 
 class ExpertSignUpSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -119,13 +116,16 @@ class ExpertSignUpSerializer(serializers.ModelSerializer):
         # Message for notification
         message = f"New expert profile created: {expert.first_name} {expert.last_name}"
 
-        # Call send_notification_to_owner() with owner_user and message arguments
-        send_notification_to_owner(owner.user, message)
+        # Send notification to owner if owner exists
+        if owner:
+            send_notification_to_owner(owner.user, message)
 
         for certification in certifications_upload:
             Certification.objects.create(expert=expert, file=certification)
 
         return expert
+
+
 
 
 

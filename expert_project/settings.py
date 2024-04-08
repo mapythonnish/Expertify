@@ -204,19 +204,19 @@ EMAIL_HOST_PASSWORD = 'hwcrwwqaielxivhr'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-"""import firebase_admin
+import firebase_admin
 from firebase_admin import credentials
 
 # Path to your service account key JSON file with raw string literal
-cred = credentials.Certificate('C:\Expertify\expert_project\expert_app\expertify-f25e7-firebase-adminsdk-afnbo-f721f8b481.json')
-firebase_admin.initialize_app(cred)"""
+cred = credentials.Certificate('C:\Expertify\expert_project\expert_app\expertify-f25e7-firebase-adminsdk-afnbo-770648a25b.json')
+firebase_admin.initialize_app(cred)
 
  
-'''FCM_DJANGO_SETTINGS = {
+FCM_DJANGO_SETTINGS = {
     
     "APP_VERBOSE_NAME": "My FCM Integration",
     "FCM_SERVER_KEY": "AAAAKwMy5yM:APA91bEqht-B24PpdZjR5NzaWPzn8dkJe2tkrDe9k7GkKM0G_uNHe1Iqi_p8wmqzbgRh1tdBa-2JKARm1zxNZnus6Ss0Wl3dEezdV9F18H4QKv5HHJ5Ea3DpUZfCXj0wkCeUH56J79bH",  # Get it from Firebase Console
-}'''
+}
 
  
 CORS_ORIGIN_ALLOW_ALL = True
