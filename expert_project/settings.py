@@ -204,7 +204,7 @@ EMAIL_HOST_PASSWORD = 'hwcrwwqaielxivhr'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-import firebase_admin
+'''import firebase_admin
 from firebase_admin import credentials
 
 # Path to your service account key JSON file with raw string literal
@@ -216,7 +216,7 @@ FCM_DJANGO_SETTINGS = {
     
     "APP_VERBOSE_NAME": "My FCM Integration",
     "FCM_SERVER_KEY": "AAAAKwMy5yM:APA91bEqht-B24PpdZjR5NzaWPzn8dkJe2tkrDe9k7GkKM0G_uNHe1Iqi_p8wmqzbgRh1tdBa-2JKARm1zxNZnus6Ss0Wl3dEezdV9F18H4QKv5HHJ5Ea3DpUZfCXj0wkCeUH56J79bH",  # Get it from Firebase Console
-}
+}'''
 
  
 CORS_ORIGIN_ALLOW_ALL = True
